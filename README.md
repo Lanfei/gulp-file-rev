@@ -38,15 +38,23 @@ Type: `Object`
 
 ##### options.hashLength
 
+The length of the hash.
+
 Type `Number`
 
 Default: `8`
 
 ##### options.separator
 
+The separator between the filename and hash.
+
 Type `String`
 
 Default: `.`
+
+#### fileRev.replace
+
+A gulp stream to replace references to renamed files.
 
 [npm-url]: https://npmjs.org/package/gulp-file-rev
 [npm-image]: https://badge.fury.io/js/gulp-file-rev.svg
