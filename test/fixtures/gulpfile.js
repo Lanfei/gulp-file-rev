@@ -9,5 +9,15 @@ gulp.task('default', function () {
 		.src(['*.html', '{html,css,js,img}/**/*'])
 		.pipe(gulpIf('**/*.{jpg,png,gif}', revision))
 		.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
-		.pipe(gulp.dest('build'));
+		.pipe(gulp.dest('dist'));
+});
+
+gulp.task('queryMode', function () {
+	var revision = fileRev({queryMode: true});
+
+	return gulp
+		.src(['*.html', '{html,css,js,img}/**/*'])
+		.pipe(gulpIf('**/*.{jpg,png,gif}', revision))
+		.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
+		.pipe(gulp.dest('dist'));
 });

@@ -14,19 +14,30 @@ var ASSETS_RE = /(['"( ])([^'":# \(\)\?]+\.[\w_]+)(['")?# ])/g;
 function revision(opts, manifest, file) {
 	var separator = opts['separator'] || '.';
 	var hashLength = opts['hashLength'] || 8;
-	var md5 = crypto.createHash('md5');
-	var hash = md5.update(file.contents).digest('hex').slice(0, hashLength);
-	var replacement = '$1' + separator + hash + '$2';
-	var filename = file.relative.replace(FILENAME_RE, replacement);
-	var filePath = file.path.replace(FILENAME_RE, replacement);
+	var algorithm = opts['algorithm'] || md5;
+	var queryMode = opts['queryMode'] || false;
 
-	gutil.log(PLUGIN_NAME + ': Rename ' + gutil.colors.green(file.relative) + ' -> ' + gutil.colors.green(filename));
-	manifest[file.path] = filePath;
-	file.path = filePath;
+	var replacement;
+	var absolute = file.path;
+	var relative = file.relative;
+	var hash = md5(file.contents, hashLength);
+
+	if (queryMode) {
+		replacement = '$1' + '$2?v=' + hash;
+		manifest[absolute] = file.path.replace(FILENAME_RE, replacement);
+	} else {
+		replacement = '$1' + separator + hash + '$2';
+		manifest[absolute] = file.path.replace(FILENAME_RE, replacement);
+		file.path = manifest[absolute];
+	}
+
+	gutil.log(PLUGIN_NAME + ': Revise ' + gutil.colors.green(relative) + ' -> ' + gutil.colors.green(file.relative));
 	return file;
 }
 
 function replace(opts, manifest, file, enc) {
+	var queryMode = opts['queryMode'] || false;
+
 	var base = file.base;
 	var relative = file.relative;
 	var dirname = path.dirname(file.path);
@@ -48,11 +59,20 @@ function replace(opts, manifest, file, enc) {
 			return null;
 		}
 
+		if (queryMode && closeChar === '?') {
+			closeChar = '&';
+		}
+
 		return replaceBy(base) || replaceBy(dirname) || match;
 	});
 
 	file.contents = new Buffer(codes);
 	return file;
+}
+
+function md5(data, hashLength) {
+	var md5 = crypto.createHash('md5');
+	return md5.update(data).digest('hex').slice(0, hashLength);
 }
 
 function fileRev(opts) {
@@ -97,3 +117,4 @@ function fileRev(opts) {
 }
 
 exports = module.exports = fileRev;
+exports.md5 = md5;

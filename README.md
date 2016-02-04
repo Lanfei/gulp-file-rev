@@ -1,6 +1,6 @@
 # gulp-file-rev [![NPM version][npm-image]][npm-url]
 
-> A gulp plugin to append the content hash to filenames.
+> A gulp plugin to revise files and replace references with new paths.
 
 ## Usage
 
@@ -22,9 +22,11 @@ gulp.task('default', function() {
 
 	return gulp
 		.src('**/*')
+		// revise files
 		.pipe(gulpIf('**/*.{jpg,png,gif}', revision))
+		// replace references
 		.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
-		.pipe(gulp.dest('build'));
+		.pipe(gulp.dest('dist'));
 });
 ```
 
@@ -52,9 +54,21 @@ Type `String`
 
 Default: `.`
 
-#### fileRev.replace
+##### options.algorithm
 
-A gulp stream to replace references to renamed files.
+The algorithm function to calculate the content hash.
+
+Type `Function`
+
+Default: `fileRev.md5`
+
+##### options.queryMode
+
+If `true`, the plugin will put the hash to the query string instead of the filename.
+
+Type: `Boolean`
+
+Default: `false`
 
 [npm-url]: https://npmjs.org/package/gulp-file-rev
 [npm-image]: https://badge.fury.io/js/gulp-file-rev.svg

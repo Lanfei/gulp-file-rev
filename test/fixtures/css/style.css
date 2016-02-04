@@ -7,5 +7,5 @@
 }
 
 .avatar3 {
-	background: url(../img/avatar3.jpg);
+	background: url(../img/avatar3.jpg?key=value);
 }
