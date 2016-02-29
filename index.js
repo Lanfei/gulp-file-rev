@@ -31,11 +31,17 @@ function revision(opts, manifest, file) {
 		file.path = manifest[absolute];
 	}
 
-	gutil.log(PLUGIN_NAME + ': Revise ' + gutil.colors.green(relative) + ' -> ' + gutil.colors.green(file.relative));
+	gutil.log(
+		PLUGIN_NAME + ': Revise',
+		gutil.colors.green(relative), '->',
+		gutil.colors.green(file.relative)
+	);
 	return file;
 }
 
 function replace(opts, manifest, file, enc) {
+	var cwd = opts['cwd'] || process.cwd();
+	var prefix = opts['prefix'] || '';
 	var queryMode = opts['queryMode'] || false;
 
 	var base = file.base;
@@ -52,8 +58,17 @@ function replace(opts, manifest, file, enc) {
 			oldPath = path.join(base, filename);
 			newPath = manifest[oldPath];
 			if (newPath) {
-				newFilename = path.relative(base, newPath);
-				gutil.log(PLUGIN_NAME + ': Replace', gutil.colors.green(filename), '->', gutil.colors.green(newFilename), '(' + relative + ')');
+				if (prefix) {
+					newFilename = prefix + path.relative(cwd, newPath);
+				} else {
+					newFilename = path.relative(base, newPath);
+				}
+				gutil.log(
+					PLUGIN_NAME + ': Replace',
+					gutil.colors.green(filename), '->',
+					gutil.colors.green(newFilename),
+					'(' + relative + ')'
+				);
 				return openChar + newFilename + closeChar;
 			}
 			return null;

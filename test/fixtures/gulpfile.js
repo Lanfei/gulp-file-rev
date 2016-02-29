@@ -21,3 +21,13 @@ gulp.task('queryMode', function () {
 		.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
 		.pipe(gulp.dest('dist'));
 });
+
+gulp.task('cdn', function () {
+	var revision = fileRev({prefix: 'http://www.cdn.com/'});
+
+	return gulp
+		.src(['*.html', '{html,css,js,img}/**/*'])
+		.pipe(gulpIf('**/*.{jpg,png,gif}', revision))
+		.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
+		.pipe(gulp.dest('dist'));
+});

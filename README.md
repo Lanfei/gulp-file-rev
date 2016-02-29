@@ -70,5 +70,21 @@ Type: `Boolean`
 
 Default: `false`
 
+##### options.prefix
+
+The prefix to prepended to the file path.
+
+Type: `String`
+
+Default: ``
+
+##### options.cwd
+
+Current working directory for prefix prepending, only has an effect if `options.prefix` is provided.
+
+Type: `String`
+
+Default: `process.cwd()`
+
 [npm-url]: https://npmjs.org/package/gulp-file-rev
 [npm-image]: https://badge.fury.io/js/gulp-file-rev.svg
