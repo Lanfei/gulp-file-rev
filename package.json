@@ -1,6 +1,6 @@
 {
   "name": "gulp-file-rev",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A gulp plugin to append the content hash to filenames.",
   "main": "index.js",
   "scripts": {

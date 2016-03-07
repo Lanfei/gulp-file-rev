@@ -42,7 +42,7 @@ Type: `Object`
 
 The length of the hash.
 
-Type `Number`
+Type: `Number`
 
 Default: `8`
 
@@ -50,7 +50,7 @@ Default: `8`
 
 The separator between the filename and hash.
 
-Type `String`
+Type: `String`
 
 Default: `.`
 
@@ -58,7 +58,7 @@ Default: `.`
 
 The algorithm function to calculate the content hash.
 
-Type `Function`
+Type: `Function`
 
 Default: `fileRev.md5`
 
