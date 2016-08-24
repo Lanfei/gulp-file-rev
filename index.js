@@ -6,7 +6,7 @@ var crypto = require('crypto');
 var gutil = require('gulp-util');
 var through = require('through2');
 
-const PLUGIN_NAME = 'gulp-file-rev';
+var PLUGIN_NAME = 'gulp-file-rev';
 
 var FILENAME_RE = /([^\/\.]+)(\.\w*$)/;
 var ASSETS_RE = /(['"( ])([^'":# \(\)\?]+\.[\w_]+)(['")?# ])/g;
