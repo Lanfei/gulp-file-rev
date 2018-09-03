@@ -1,15 +1,16 @@
 'use strict';
 
-var fs = require('fs');
 var path = require('path');
+var log = require('fancy-log');
 var crypto = require('crypto');
-var gutil = require('gulp-util');
 var through = require('through2');
+var colors = require('ansi-colors');
+var PluginError = require('plugin-error');
 
 var PLUGIN_NAME = 'gulp-file-rev';
 
-var FILENAME_RE = /([^\/\.]+)(\.\w*$)/;
-var ASSETS_RE = /(['"( ])([^'":# \(\)\?]+\.[\w_]+)(['")?# ])/g;
+var FILENAME_RE = /([^\/.]+)(\.\w*$)/;
+var ASSETS_RE = /(['"( ])([^'":# ()?]+\.[\w_]+)(['")?# ])/g;
 
 function revision(opts, manifest, file) {
 	var separator = opts['separator'] || '.';
@@ -20,22 +21,18 @@ function revision(opts, manifest, file) {
 	var replacement;
 	var absolute = file.path;
 	var relative = file.relative;
-	var hash = md5(file.contents, hashLength);
+	var hash = algorithm(file.contents, hashLength);
 
 	if (queryMode) {
 		replacement = '$1' + '$2?v=' + hash;
-		manifest[absolute] = file.path.replace(FILENAME_RE, replacement);
+		manifest[absolute] = absolute.replace(FILENAME_RE, replacement);
 	} else {
 		replacement = '$1' + separator + hash + '$2';
-		manifest[absolute] = file.path.replace(FILENAME_RE, replacement);
+		manifest[absolute] = absolute.replace(FILENAME_RE, replacement);
 		file.path = manifest[absolute];
 	}
 
-	gutil.log(
-		PLUGIN_NAME + ': Revise',
-		gutil.colors.green(relative), '->',
-		gutil.colors.green(file.relative)
-	);
+	log(PLUGIN_NAME + ': Revise', colors.green(relative), '->', colors.green(file.relative));
 	return file;
 }
 
@@ -63,12 +60,7 @@ function replace(opts, manifest, file, enc) {
 				} else {
 					newFilename = path.relative(base, newPath);
 				}
-				gutil.log(
-					PLUGIN_NAME + ': Replace',
-					gutil.colors.green(filename), '->',
-					gutil.colors.green(newFilename),
-					'(' + relative + ')'
-				);
+				log(PLUGIN_NAME + ': Replace', colors.green(filename), '->', colors.green(newFilename), '(' + relative + ')');
 				return openChar + newFilename + closeChar;
 			}
 			return null;
@@ -81,7 +73,7 @@ function replace(opts, manifest, file, enc) {
 		return replaceBy(base) || replaceBy(dirname) || match;
 	});
 
-	file.contents = new Buffer(codes);
+	file.contents = Buffer.from(codes);
 	return file;
 }
 
@@ -100,7 +92,7 @@ function fileRev(opts) {
 		if (file.isNull()) {
 			return cb();
 		} else if (file.isStream()) {
-			cb(new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
+			cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
 		} else if (file.isBuffer()) {
 			cb(null, revision(opts, manifest, file));
 		}
@@ -110,7 +102,7 @@ function fileRev(opts) {
 		if (file.isNull()) {
 			return cb();
 		} else if (file.isStream()) {
-			cb(new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
+			cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
 		} else if (file.isBuffer()) {
 			cache.push({
 				file: file,
