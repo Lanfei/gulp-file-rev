@@ -1,7 +1,7 @@
 var gulp = require('gulp');
-var should = require('should');
 var gulpIf = require('gulp-if');
 var through = require('through2');
+var expect = require('expect.js');
 var fileRev = require('../');
 
 var hashRe = /\.\w{8}(\.\w*$|$)/;
@@ -15,15 +15,15 @@ describe('gulp-file-rev', function () {
 			.src(['test/fixtures/*.html', 'test/fixtures/{html,css,js,img}/**/*'])
 			.pipe(gulpIf('img/**/*', revision))
 			.pipe(gulpIf('img/**/*', through.obj(function (file, enc, cb) {
-				hashRe.test(file.relative).should.be.true();
+				expect(file.relative).to.match(hashRe);
 				cb(null, file);
 			})))
 			.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
 			.pipe(gulpIf('**/*.{html,css,js}', through.obj(function (file, enc, cb) {
 				var contents = file.contents.toString();
-				contents.indexOf('img/avatar1.e244ac2d.jpg').should.above(0);
-				contents.indexOf('img/avatar2.7f692ffd.jpg').should.above(0);
-				contents.indexOf('img/avatar3.e3641288.jpg?key=value').should.above(0);
+				expect(contents).to.contain('img/avatar1.e244ac2d.jpg');
+				expect(contents).to.contain('img/avatar2.7f692ffd.jpg');
+				expect(contents).to.contain('img/avatar3.e3641288.jpg?key=value');
 				cb(null, file);
 			}, function () {
 				done();
@@ -37,15 +37,15 @@ describe('gulp-file-rev', function () {
 			.src(['test/fixtures/*.html', 'test/fixtures/{html,css,js,img}/**/*'])
 			.pipe(gulpIf('img/**/*', revision))
 			.pipe(gulpIf('img/**/*', through.obj(function (file, enc, cb) {
-				hashRe.test(file.relative).should.be.false();
+				expect(file.relative).to.not.match(hashRe);
 				cb(null, file);
 			})))
 			.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
 			.pipe(gulpIf('**/*.{html,css,js}', through.obj(function (file, enc, cb) {
 				var contents = file.contents.toString();
-				contents.indexOf('img/avatar1.jpg?v=e244ac2d').should.above(0);
-				contents.indexOf('img/avatar2.jpg?v=7f692ffd').should.above(0);
-				contents.indexOf('img/avatar3.jpg?v=e3641288&key=value').should.above(0);
+				expect(contents).to.contain('img/avatar1.jpg?v=e244ac2d');
+				expect(contents).to.contain('img/avatar2.jpg?v=7f692ffd');
+				expect(contents).to.contain('img/avatar3.jpg?v=e3641288&key=value');
 				cb(null, file);
 			}, function () {
 				done();
@@ -63,15 +63,15 @@ describe('gulp-file-rev', function () {
 			.src(['test/fixtures/*.html', 'test/fixtures/{html,css,js,img}/**/*'])
 			.pipe(gulpIf('img/**/*', revision))
 			.pipe(gulpIf('img/**/*', through.obj(function (file, enc, cb) {
-				hashRe.test(file.relative).should.be.true();
+				expect(file.relative).to.match(hashRe);
 				cb(null, file);
 			})))
 			.pipe(gulpIf('**/*.{html,css,js}', revision.replace))
 			.pipe(gulpIf('**/*.{html,css,js}', through.obj(function (file, enc, cb) {
 				var contents = file.contents.toString();
-				contents.indexOf(cdnPrefix + 'img/avatar1.e244ac2d.jpg').should.above(0);
-				contents.indexOf(cdnPrefix + 'img/avatar2.7f692ffd.jpg').should.above(0);
-				contents.indexOf(cdnPrefix + 'img/avatar3.e3641288.jpg?key=value').should.above(0);
+				expect(contents).to.contain(cdnPrefix + 'img/avatar1.e244ac2d.jpg');
+				expect(contents).to.contain(cdnPrefix + 'img/avatar2.7f692ffd.jpg');
+				expect(contents).to.contain(cdnPrefix + 'img/avatar3.e3641288.jpg?key=value');
 				cb(null, file);
 			}, function () {
 				done();

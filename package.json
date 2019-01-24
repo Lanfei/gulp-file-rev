@@ -1,11 +1,15 @@
 {
   "name": "gulp-file-rev",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A gulp plugin to append the content hash to filenames.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "codecov": "istanbul cover _mocha && codecov"
   },
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lanfei/gulp-file-rev.git"
@@ -29,9 +33,11 @@
     "through2": "^3.0.0"
   },
   "devDependencies": {
+    "codecov": "^3.1.0",
+    "expect.js": "^0.3.1",
     "gulp": "^4.0.0",
     "gulp-if": "^2.0.2",
-    "mocha": "^5.2.0",
-    "should": "^13.2.3"
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0"
   }
 }

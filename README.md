@@ -1,4 +1,4 @@
-# gulp-file-rev [![NPM version][npm-image]][npm-url]
+# gulp-file-rev · [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Version][version-image]][version-url] [![License][license-image]][license-url]
 
 > A gulp plugin to revise files and replace references with new paths.
 
@@ -86,5 +86,11 @@ Type: `String`
 
 Default: `process.cwd()`
 
-[npm-url]: https://npmjs.org/package/gulp-file-rev
-[npm-image]: https://badge.fury.io/js/gulp-file-rev.svg
+[build-url]: https://circleci.com/gh/Lanfei/gulp-file-rev
+[build-image]: https://img.shields.io/circleci/project/github/Lanfei/gulp-file-rev.svg
+[coverage-url]: https://codecov.io/github/Lanfei/gulp-file-rev
+[coverage-image]: https://img.shields.io/codecov/c/github/Lanfei/gulp-file-rev.svg
+[version-url]: https://npmjs.org/package/gulp-file-rev
+[version-image]: https://img.shields.io/npm/v/gulp-file-rev.svg
+[license-url]: https://github.com/Lanfei/gulp-file-rev/blob/master/LICENSE
+[license-image]: https://img.shields.io/npm/l/gulp-file-rev.svg
