@@ -7,7 +7,7 @@
 First, install `gulp-file-rev` as a development dependency:
 
 ```shell
-$ npm install --save-dev gulp-file-rev
+npm install --save-dev gulp-file-rev
 ```
 
 Then, add it to your `gulpfile.js`:
@@ -72,7 +72,7 @@ Default: `false`
 
 ##### options.prefix
 
-The prefix to prepended to the file path.
+The prefix to prepended to the file path, which is usually used to prepend the CDN host. *Please notice that you should set `options.cwd` properly.*
 
 Type: `String`
 
