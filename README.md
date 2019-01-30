@@ -1,4 +1,11 @@
-# gulp-file-rev · [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Version][version-image]][version-url] [![License][license-image]][license-url]
+# gulp-file-rev
+
+[![Build Status][build-image]][build-url]
+[![Coverage Status][coverage-image]][coverage-url]
+[![Version][version-image]][version-url]
+[![License][license-image]][license-url]
+[![Dependencies][dep-image]][dep-url]
+[![DevDependencies][dev-dep-image]][dev-dep-url]
 
 > A gulp plugin to revise files and replace references with new paths.
 
@@ -94,3 +101,7 @@ Default: `process.cwd()`
 [version-image]: https://img.shields.io/npm/v/gulp-file-rev.svg
 [license-url]: https://github.com/Lanfei/gulp-file-rev/blob/master/LICENSE
 [license-image]: https://img.shields.io/npm/l/gulp-file-rev.svg
+[dep-url]: https://david-dm.org/Lanfei/gulp-file-rev
+[dep-image]: https://david-dm.org/Lanfei/gulp-file-rev/status.svg
+[dev-dep-url]: https://david-dm.org/Lanfei/gulp-file-rev?type=dev
+[dev-dep-image]: https://david-dm.org/Lanfei/gulp-file-rev/dev-status.svg
